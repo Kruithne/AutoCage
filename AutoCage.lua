@@ -7,7 +7,7 @@
 	AutoCage.lua - Core engine file for the addon.
 ]]
 
-local petCagedPattern = string.gsub(BATTLE_PET_NEW_PET, "%%s", ".*%%[([A-Za-z%%s0-9%'%-]+)%%].*");
+local petCagedPattern = string.gsub(BATTLE_PET_NEW_PET, "%%s", ".*Hbattlepet:(%%d+).*");
 local acHasHooked = false;
 
 L_AUTOCAGE_CAGED_MESSAGE = {
@@ -83,18 +83,21 @@ end
 
 --[[
 	AutoCage_HandleAutoCaging
-	Takes the name of a pet and cages "duplicates".
+	Takes the ID of a pet and cages "duplicates".
 ]]
-function AutoCage_HandleAutoCaging(petString)
+function AutoCage_HandleAutoCaging(petID)
 	C_PetJournal.ClearSearchFilter(); -- Clear filter so we have a full pet list.
 	local total, owned = C_PetJournal.GetNumPets();
 	local found = false;
 
+	petID = tonumber(petID);
+
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
-		local pGuid, _, _, pNickname, pLevel, pIsFav, _, pName = C_PetJournal.GetPetInfoByIndex(index);
-		if pName == petString then
+		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName = C_PetJournal.GetPetInfoByIndex(index);
+
+		if pBattlePetID == petID then
 			if found and pLevel == 1 and not pIsFav then
-				AutoCage_Message(petString .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
+				AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
 				C_PetJournal.CagePetByID(pGuid);
 			else
 				found = true;
@@ -168,6 +171,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "CHAT_MSG_SYSTEM" and AutoCageEnabled then
 		local msg, format = ...;
 		local match = string.match(msg, petCagedPattern);
+
 		if match ~= nil then
 			AutoCage_HandleAutoCaging(match);
 		end
