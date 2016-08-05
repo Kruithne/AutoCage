@@ -40,6 +40,18 @@ L_AUTOCAGE_LOADED = {
 	["ptBR"] = "Carregado!"
 };
 
+L_AUTOCAGE_DUPLICATE_PETS_BUTTON = {
+  ["deDE"] = "Haustiere einsperren", -- missing "duplicate" due to length
+  ["enGB"] = "Cage Duplicate Pets",
+  ["enUS"] = "Cage Duplicate Pets",
+};
+
+L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP = {
+  ["deDE"] = "Sperrt alle Haustiere in einen Käfig, die weder favorisiert sind, noch Level eins übersteigen.",
+  ["enGB"] = "Cages all duplicate pets that are neither favourited or above level one.",
+  ["enUS"] = "Cages all duplicate pets that are neither favourited or above level one.",
+};
+
 L_AUTOCAGE_CHECKBOX = {
 	["frFR"] = "Automatiquement les doublons de cage",
 	["deDE"] = "Haustiere automatisch einsperren", -- missing "duplicate" due to length
@@ -138,8 +150,21 @@ function AutoCage_JournalHook()
 	cageButton = CreateFrame("Button", "AutoCage_CageButton", PetJournal, "MagicButtonTemplate");
 	cageButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 0, 0);
 	cageButton:SetWidth(150);
-	cageButton:SetText("Cage Duplicate Pets");
+	cageButton:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON));
 	cageButton:SetScript("OnClick", AutoCage_HandleAutoCaging);
+	cageButton:SetScript("OnEnter",
+		function(self)
+			GameTooltip:SetOwner (self, "ANCHOR_RIGHT");
+			GameTooltip:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON), 1, 1, 1);
+			GameTooltip:AddLine(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP), nil, nil, nil, true);
+			GameTooltip:Show();
+		end
+	);
+	cageButton:SetScript("OnLeave",
+		function()
+			GameTooltip:Hide();
+		end
+	);
 
 	-- Set-up enable/disable check-button.
 	checkButton = CreateFrame("CheckButton", "AutoCage_EnabledButton", PetJournal, "ChatConfigCheckButtonTemplate");
