@@ -134,9 +134,16 @@ function AutoCage_JournalHook()
 		return;
 	end
 
+	-- Add a caging button
+	cageButton = CreateFrame("Button", "AutoCage_CageButton", PetJournal, "MagicButtonTemplate");
+	cageButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 0, 0);
+	cageButton:SetWidth(150);
+	cageButton:SetText("Cage Duplicate Pets");
+	cageButton:SetScript("OnClick", AutoCage_HandleAutoCaging);
+
 	-- Set-up enable/disable check-button.
 	checkButton = CreateFrame("CheckButton", "AutoCage_EnabledButton", PetJournal, "ChatConfigCheckButtonTemplate");
-	checkButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 10, -2);
+	checkButton:SetPoint("LEFT", AutoCage_CageButton, "RIGHT", 10, -2);
 	checkButton:SetChecked(AutoCageEnabled);
 	AutoCage_EnabledButtonText:SetPoint("LEFT", checkButton, "RIGHT", -1, 0);
 	AutoCage_EnabledButtonText:SetText(AutoCage_GetLocalizedString(L_AUTOCAGE_CHECKBOX));
@@ -195,7 +202,7 @@ eventFrame:SetScript("OnUpdate", function(self, elapsed)
 	if self.pendingUpdate then
 		if self.elapsed >= 1 then
 			AutoCage_HandleAutoCaging();
-			
+
 			self.elapsed = 0;
 			self.pendingUpdate = false;
 		else
