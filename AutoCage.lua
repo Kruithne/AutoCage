@@ -12,7 +12,7 @@ local acHasHooked = false;
 
 L_AUTOCAGE_CAGED_MESSAGE = {
 	["frFR"] = "Dupliquer animal de compagnie; la mise en cage pour vous!",
-	["deDE"] = "Duplizieren pet; Käfighaltung es für Sie!",
+	["deDE"] = "Doppeltes Haustier; Sperre es in einen Käfig für dich!",
 	["enGB"] = "Duplicate pet; caging it for you!",
 	["enUS"] = "Duplicate pet; caging it for you!",
 	["itIT"] = "Duplicare animale; messa in gabbia per voi!",
@@ -42,7 +42,7 @@ L_AUTOCAGE_LOADED = {
 
 L_AUTOCAGE_CHECKBOX = {
 	["frFR"] = "Automatiquement les doublons de cage",
-	["deDE"] = "Automatisch Käfig Duplikate",
+	["deDE"] = "Haustiere automatisch einsperren", -- missing "duplicate" due to length
 	["enGB"] = "Automatically cage duplicates",
 	["enUS"] = "Automatically cage duplicates",
 	["itIT"] = "Automaticamente i duplicati di gabbia",
@@ -57,7 +57,7 @@ L_AUTOCAGE_CHECKBOX = {
 
 L_AUTOCAGE_CHECKBOX_TOOLTIP = {
 	["frFR"] = "Si activé, les animaux de compagnie en double qui s'apprend on mettra automatiquement dans une cage.",
-	["deDE"] = "Wenn aktiviert, werden doppelte Haustiere, die erlernt werden automatisch in einen Käfig gesetzt.",
+	["deDE"] = "Wenn aktiviert werden doppelte Haustiere automatisch in einen Käfig gesetzt, sobald sie erlernt werden.",
 	["enGB"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["enUS"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["itIT"] = "Se abilitata, animali duplicati che avere imparati metterà automaticamente in una gabbia.",
