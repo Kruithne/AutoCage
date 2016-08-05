@@ -93,10 +93,10 @@ function AutoCage_HandleAutoCaging()
 	local petCache = {};
 
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
-		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName = C_PetJournal.GetPetInfoByIndex(index);
+		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName, _, _, _, _, _, _, _, pIsTradeable = C_PetJournal.GetPetInfoByIndex(index);
 
 		if petCache[pBattlePetID] == true then
-			if pLevel == 1 and not pIsFav then
+			if pLevel == 1 and not pIsFav and pIsTradeable then
 				AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
 				C_PetJournal.CagePetByID(pGuid);
 			end
