@@ -1,3 +1,7 @@
+** Version 1.4.1 **
+* Will no longer attempt to cage duplicate pets that cannot be caged.
+* Improved deDE localization.
+
 ** Version 1.4 **
 * Updated to work with Legion (7.0.3).
 * Added a manual caging button to the pet journal.
