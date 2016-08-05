@@ -12,7 +12,7 @@ local acHasHooked = false;
 
 L_AUTOCAGE_CAGED_MESSAGE = {
 	["frFR"] = "Dupliquer animal de compagnie; la mise en cage pour vous!",
-	["deDE"] = "Duplizieren pet; Käfighaltung es für Sie!",
+	["deDE"] = "Doppeltes Haustier; Sperre es in einen Käfig für dich!",
 	["enGB"] = "Duplicate pet; caging it for you!",
 	["enUS"] = "Duplicate pet; caging it for you!",
 	["itIT"] = "Duplicare animale; messa in gabbia per voi!",
@@ -40,9 +40,21 @@ L_AUTOCAGE_LOADED = {
 	["ptBR"] = "Carregado!"
 };
 
+L_AUTOCAGE_DUPLICATE_PETS_BUTTON = {
+  ["deDE"] = "Haustiere einsperren", -- missing "duplicate" due to length
+  ["enGB"] = "Cage Duplicate Pets",
+  ["enUS"] = "Cage Duplicate Pets",
+};
+
+L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP = {
+  ["deDE"] = "Sperrt alle Haustiere in einen Käfig, die weder favorisiert sind, noch Level eins übersteigen.",
+  ["enGB"] = "Cages all duplicate pets that are neither favourited or above level one.",
+  ["enUS"] = "Cages all duplicate pets that are neither favourited or above level one.",
+};
+
 L_AUTOCAGE_CHECKBOX = {
 	["frFR"] = "Automatiquement les doublons de cage",
-	["deDE"] = "Automatisch Käfig Duplikate",
+	["deDE"] = "Haustiere automatisch einsperren", -- missing "duplicate" due to length
 	["enGB"] = "Automatically cage duplicates",
 	["enUS"] = "Automatically cage duplicates",
 	["itIT"] = "Automaticamente i duplicati di gabbia",
@@ -57,7 +69,7 @@ L_AUTOCAGE_CHECKBOX = {
 
 L_AUTOCAGE_CHECKBOX_TOOLTIP = {
 	["frFR"] = "Si activé, les animaux de compagnie en double qui s'apprend on mettra automatiquement dans une cage.",
-	["deDE"] = "Wenn aktiviert, werden doppelte Haustiere, die erlernt werden automatisch in einen Käfig gesetzt.",
+	["deDE"] = "Wenn aktiviert werden doppelte Haustiere automatisch in einen Käfig gesetzt, sobald sie erlernt werden.",
 	["enGB"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["enUS"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["itIT"] = "Se abilitata, animali duplicati che avere imparati metterà automaticamente in una gabbia.",
@@ -78,7 +90,7 @@ function AutoCage_GetLocalizedString(strings)
 	if strings[GetLocale()] ~= nil then
 		return strings[GetLocale()];
 	end
-	return "Unknown";
+	return strings["enGB"] or "Unknown";
 end
 
 --[[
@@ -93,10 +105,10 @@ function AutoCage_HandleAutoCaging()
 	local petCache = {};
 
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
-		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName = C_PetJournal.GetPetInfoByIndex(index);
+		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName, _, _, _, _, _, _, _, pIsTradeable = C_PetJournal.GetPetInfoByIndex(index);
 
 		if petCache[pBattlePetID] == true then
-			if pLevel == 1 and not pIsFav then
+			if pLevel == 1 and not pIsFav and pIsTradeable then
 				AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
 				C_PetJournal.CagePetByID(pGuid);
 			end
@@ -138,8 +150,21 @@ function AutoCage_JournalHook()
 	cageButton = CreateFrame("Button", "AutoCage_CageButton", PetJournal, "MagicButtonTemplate");
 	cageButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 0, 0);
 	cageButton:SetWidth(150);
-	cageButton:SetText("Cage Duplicate Pets");
+	cageButton:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON));
 	cageButton:SetScript("OnClick", AutoCage_HandleAutoCaging);
+	cageButton:SetScript("OnEnter",
+		function(self)
+			GameTooltip:SetOwner (self, "ANCHOR_RIGHT");
+			GameTooltip:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON), 1, 1, 1);
+			GameTooltip:AddLine(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP), nil, nil, nil, true);
+			GameTooltip:Show();
+		end
+	);
+	cageButton:SetScript("OnLeave",
+		function()
+			GameTooltip:Hide();
+		end
+	);
 
 	-- Set-up enable/disable check-button.
 	checkButton = CreateFrame("CheckButton", "AutoCage_EnabledButton", PetJournal, "ChatConfigCheckButtonTemplate");
