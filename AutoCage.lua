@@ -83,25 +83,25 @@ end
 
 --[[
 	AutoCage_HandleAutoCaging
-	Takes the ID of a pet and cages "duplicates".
+	Find all duplicates and cage them.
 ]]
-function AutoCage_HandleAutoCaging(petID)
+function AutoCage_HandleAutoCaging()
 	C_PetJournal.ClearSearchFilter(); -- Clear filter so we have a full pet list.
-	local total, owned = C_PetJournal.GetNumPets();
-	local found = false;
+	C_PetJournal.SetPetSortParameter(LE_SORT_BY_LEVEL); -- Sort by level, ensuring higher level pets are encountered first.
 
-	petID = tonumber(petID);
+	local total, owned = C_PetJournal.GetNumPets();
+	local petCache = {};
 
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
 		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName = C_PetJournal.GetPetInfoByIndex(index);
 
-		if pBattlePetID == petID then
-			if found and pLevel == 1 and not pIsFav then
+		if petCache[pBattlePetID] == true then
+			if pLevel == 1 and not pIsFav then
 				AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
 				C_PetJournal.CagePetByID(pGuid);
-			else
-				found = true;
 			end
+		else
+			petCache[pBattlePetID] = true;
 		end
 	end
 end
@@ -166,6 +166,8 @@ end
 local eventFrame = CreateFrame("FRAME");
 eventFrame:RegisterEvent("CHAT_MSG_SYSTEM");
 eventFrame:RegisterEvent("ADDON_LOADED");
+eventFrame.elapsed = 0;
+eventFrame.pendingUpdate = false;
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "CHAT_MSG_SYSTEM" and AutoCageEnabled then
@@ -173,7 +175,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		local match = string.match(msg, petCagedPattern);
 
 		if match ~= nil then
-			AutoCage_HandleAutoCaging(match);
+			self.pendingUpdate = true;
 		end
 	elseif event == "ADDON_LOADED" then
 		local addon = ...;
@@ -185,6 +187,19 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 			if IsAddOnLoaded("Blizzard_Collections") then
 				AutoCage_JournalHook();
 			end
+		end
+	end
+end);
+
+eventFrame:SetScript("OnUpdate", function(self, elapsed)
+	if self.pendingUpdate then
+		if self.elapsed >= 1 then
+			AutoCage_HandleAutoCaging();
+			
+			self.elapsed = 0;
+			self.pendingUpdate = false;
+		else
+			self.elapsed = self.elapsed + elapsed;
 		end
 	end
 end);
