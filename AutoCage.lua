@@ -78,7 +78,7 @@ function AutoCage_GetLocalizedString(strings)
 	if strings[GetLocale()] ~= nil then
 		return strings[GetLocale()];
 	end
-	return "Unknown";
+	return strings["enGB"] or "Unknown";
 end
 
 --[[
