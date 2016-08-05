@@ -2,7 +2,7 @@
 	AutoCage (C) @Kruithne <kruithne@gmail.com>
 	Licensed under GNU General Public Licence version 3.
 
-	https://github.com/Kruithne/AutoCageAddon
+	https://github.com/Kruithne/AutoCage
 
 	AutoCage.lua - Core engine file for the addon.
 ]]

@@ -1,7 +1,7 @@
-## Interface: 60200
+## Interface: 70000
 ## Title: AutoCage
 ## Notes: Automatically cage duplicate battle pets!
-## Author: @Kruithne on Twitter
-## Version: 1.3
+## Author: Kruithne
+## Version: 1.4
 ## SavedVariables: AutoCageEnabled
 AutoCage.lua

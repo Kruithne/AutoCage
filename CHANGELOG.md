@@ -1,3 +1,6 @@
+** Version 1.4 **
+* Updated to work with Legion (7.0.3).
+
 ** Version 1.3 **
 * Pets should no longer be ignored if the Pet Journal has not yet been opened.
 * A pointless message is no longer displayed when the addon loads.
