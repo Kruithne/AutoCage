@@ -1,3 +1,7 @@
+** Version 1.4.2 **
+* When obtaining a new duplicate pet, only that pet will be caged, rather than every duplicate.
+* Caging large amounts of pets should now work correctly.
+
 ** Version 1.4.1 **
 * Will no longer attempt to cage duplicate pets that cannot be caged.
 * Improved deDE localization.

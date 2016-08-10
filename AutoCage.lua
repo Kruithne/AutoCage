@@ -97,23 +97,27 @@ end
 	AutoCage_HandleAutoCaging
 	Find all duplicates and cage them.
 ]]
-function AutoCage_HandleAutoCaging()
+local petsToCage = {};
+function AutoCage_HandleAutoCaging(petToCageID)
 	C_PetJournal.ClearSearchFilter(); -- Clear filter so we have a full pet list.
 	C_PetJournal.SetPetSortParameter(LE_SORT_BY_LEVEL); -- Sort by level, ensuring higher level pets are encountered first.
 
 	local total, owned = C_PetJournal.GetNumPets();
 	local petCache = {};
+	petsToCage = {};
 
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
 		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName, _, _, _, _, _, _, _, pIsTradeable = C_PetJournal.GetPetInfoByIndex(index);
 
-		if petCache[pBattlePetID] == true then
-			if pLevel == 1 and not pIsFav and pIsTradeable then
-				AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
-				C_PetJournal.CagePetByID(pGuid);
+		if petToCageID == nil or petToCageID == pBattlePetID then
+			if petCache[pBattlePetID] == true then
+				if pLevel == 1 and not pIsFav and pIsTradeable then
+					AutoCage_Message(pName .. " :: " .. AutoCage_GetLocalizedString(L_AUTOCAGE_CAGED_MESSAGE));
+					table.insert(petsToCage, pGuid);
+				end
+			else
+				petCache[pBattlePetID] = true;
 			end
-		else
-			petCache[pBattlePetID] = true;
 		end
 	end
 end
@@ -200,6 +204,7 @@ eventFrame:RegisterEvent("CHAT_MSG_SYSTEM");
 eventFrame:RegisterEvent("ADDON_LOADED");
 eventFrame.elapsed = 0;
 eventFrame.pendingUpdate = false;
+eventFrame.cageTimer = 0;
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "CHAT_MSG_SYSTEM" and AutoCageEnabled then
@@ -208,6 +213,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 
 		if match ~= nil then
 			self.pendingUpdate = true;
+			self.petID = match;
 		end
 	elseif event == "ADDON_LOADED" then
 		local addon = ...;
@@ -226,12 +232,23 @@ end);
 eventFrame:SetScript("OnUpdate", function(self, elapsed)
 	if self.pendingUpdate then
 		if self.elapsed >= 1 then
-			AutoCage_HandleAutoCaging();
+			AutoCage_HandleAutoCaging(self.petID);
 
 			self.elapsed = 0;
 			self.pendingUpdate = false;
 		else
 			self.elapsed = self.elapsed + elapsed;
 		end
+	end
+
+	if self.cageTimer >= 1 then
+		if #petsToCage > 0 then
+			for i=1, #petsToCage do
+				C_PetJournal.CagePetByID(petsToCage[i]);
+			end
+		end
+		self.cageTimer = 0;
+	else
+		self.cageTimer = self.cageTimer + elapsed;
 	end
 end);
