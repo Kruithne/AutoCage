@@ -217,7 +217,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 
 		if match ~= nil then
 			self.pendingUpdate = true;
-			self.petID = match;
+			self.petID = tonumber (match);
 		end
 	elseif event == "ADDON_LOADED" then
 		local addon = ...;
