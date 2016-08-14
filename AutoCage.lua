@@ -159,7 +159,7 @@ function AutoCage_JournalHook()
 	cageButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 0, 0);
 	cageButton:SetWidth(150);
 	cageButton:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON));
-	cageButton:SetScript("OnClick", AutoCage_HandleAutoCaging);
+	cageButton:SetScript("OnClick", function() AutoCage_HandleAutoCaging(nil) end);
 	cageButton:SetScript("OnEnter",
 		function(self)
 			GameTooltip:SetOwner (self, "ANCHOR_RIGHT");
