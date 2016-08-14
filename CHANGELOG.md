@@ -1,3 +1,6 @@
+** Version 1.4.4 **
+* Fixed edge-case issue that would prevent manual caging of pets.
+
 ** Version 1.4.3 **
 * Fixed issue that was preventing pets from being caged.
 
