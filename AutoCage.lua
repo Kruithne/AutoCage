@@ -106,6 +106,10 @@ function AutoCage_HandleAutoCaging(petToCageID)
 	local petCache = {};
 	petsToCage = {};
 
+	if petToCageID ~= nil then
+		petToCageID = tonumber(petToCageID);
+	end
+
 	for index = 1, owned do -- Loop every pet owned (unowned will be over the offset).
 		local pGuid, pBattlePetID, _, pNickname, pLevel, pIsFav, _, pName, _, _, _, _, _, _, _, pIsTradeable = C_PetJournal.GetPetInfoByIndex(index);
 
