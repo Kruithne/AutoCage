@@ -7,3 +7,6 @@
 AutoCage.lua
 
 ## X-Contributors: bloerwald
+## X-Curse-Project-ID: autocage
+## X-GitHub-Repo: Kruithne/AutoCage
+## X-Localization: enUS, frFR, deDE, itIT, koKR, zhCN, zhTW, ruRU, esES, esMX, ptBR
