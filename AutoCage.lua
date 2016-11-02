@@ -13,7 +13,6 @@ local acHasHooked = false;
 L_AUTOCAGE_CAGED_MESSAGE = {
 	["frFR"] = "Dupliquer animal de compagnie; la mise en cage pour vous!",
 	["deDE"] = "Doppeltes Haustier; Sperre es in einen Käfig für dich!",
-	["enGB"] = "Duplicate pet; caging it for you!",
 	["enUS"] = "Duplicate pet; caging it for you!",
 	["itIT"] = "Duplicare animale; messa in gabbia per voi!",
 	["koKR"] = "애완 동물을 복제 ; 케이지 에 넣어!",
@@ -28,7 +27,6 @@ L_AUTOCAGE_CAGED_MESSAGE = {
 L_AUTOCAGE_LOADED = {
 	["frFR"] = "Chargé!",
 	["deDE"] = "Geladen!",
-	["enGB"] = "Loaded!",
 	["enUS"] = "Loaded!",
 	["itIT"] = "Caricato!",
 	["koKR"] = "로드!",
@@ -42,20 +40,17 @@ L_AUTOCAGE_LOADED = {
 
 L_AUTOCAGE_DUPLICATE_PETS_BUTTON = {
   ["deDE"] = "Haustiere einsperren", -- missing "duplicate" due to length
-  ["enGB"] = "Cage Duplicate Pets",
   ["enUS"] = "Cage Duplicate Pets",
 };
 
 L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP = {
   ["deDE"] = "Sperrt alle Haustiere in einen Käfig, die weder favorisiert sind, noch Level eins übersteigen.",
-  ["enGB"] = "Cages all duplicate pets that are neither favourited or above level one.",
   ["enUS"] = "Cages all duplicate pets that are neither favourited or above level one.",
 };
 
 L_AUTOCAGE_CHECKBOX = {
 	["frFR"] = "Automatiquement les doublons de cage",
 	["deDE"] = "Haustiere automatisch einsperren", -- missing "duplicate" due to length
-	["enGB"] = "Automatically cage duplicates",
 	["enUS"] = "Automatically cage duplicates",
 	["itIT"] = "Automaticamente i duplicati di gabbia",
 	["koKR"] = "자동으로 케이지 중복",
@@ -70,7 +65,6 @@ L_AUTOCAGE_CHECKBOX = {
 L_AUTOCAGE_CHECKBOX_TOOLTIP = {
 	["frFR"] = "Si activé, les animaux de compagnie en double qui s'apprend on mettra automatiquement dans une cage.",
 	["deDE"] = "Wenn aktiviert werden doppelte Haustiere automatisch in einen Käfig gesetzt, sobald sie erlernt werden.",
-	["enGB"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["enUS"] = "If enabled, duplicate pets that get learnt will automatically be put in a cage.",
 	["itIT"] = "Se abilitata, animali duplicati che avere imparati metterà automaticamente in una gabbia.",
 	["koKR"] = "사용 하면 배운 얻을 중복 애완 동물 감 금 소에 게 자동으로 됩니다.",
