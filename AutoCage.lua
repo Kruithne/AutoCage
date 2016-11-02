@@ -141,7 +141,7 @@ end
 	Hook our enable checkbox onto the journal frame.
 ]]
 function AutoCage_JournalHook()
-	if achasHooked then
+	if acHasHooked or IsAddOnLoaded("Rematch") then
 		return;
 	end
 
