@@ -76,6 +76,34 @@ L_AUTOCAGE_CHECKBOX_TOOLTIP = {
 	["ptBR"] = "Se habilitado, animais de estimação duplicados que se aprendeu serão automaticamente colocados em uma gaiola.",
 };
 
+L_AUTOCAGE_AUTO_ENABLED = {
+	["enUS"] = "Duplicate pets will now be automatically caged when obtained.",
+};
+
+L_AUTOCAGE_AUTO_DISABLED = {
+	["enUS"] = "Duplicate pets will no longer be automatically caged when obtained.",
+};
+
+L_AUTOCAGE_CAGING = {
+	["enUS"] = "Caging duplicate pets...",
+};
+
+L_AUTOCAGE_COMMANDS_AVAILABLE = {
+	["enUS"] = "Available Commands:",	
+};
+
+L_AUTOCAGE_COMMANDS_HELP = {
+	["enUS"] = "List available commands.",
+};
+
+L_AUTOCAGE_COMMANDS_CAGE = {
+	["enUS"] = "Toggle auto-caging functionality.",
+};
+
+L_AUTOCAGE_COMMANDS_TOGGLE = {
+	["enUS"] = "Cage all duplicate pets.",
+};
+
 --[[
 	AutoCage_GetLocalizedString
 	Selects the localized string from a localization table.
@@ -149,13 +177,13 @@ function AutoCage_JournalHook()
 	cageButton = CreateFrame("Button", "AutoCage_CageButton", PetJournal, "MagicButtonTemplate");
 	cageButton:SetPoint("LEFT", PetJournalSummonButton, "RIGHT", 0, 0);
 	cageButton:SetWidth(150);
-	cageButton:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON));
+	cageButton:SetText(AutoCage_GetLocalizedString(L_AUTOCAGE_DUPLICATE_PETS_BUTTON));
 	cageButton:SetScript("OnClick", function() AutoCage_HandleAutoCaging(nil) end);
 	cageButton:SetScript("OnEnter",
 		function(self)
 			GameTooltip:SetOwner (self, "ANCHOR_RIGHT");
-			GameTooltip:SetText(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON), 1, 1, 1);
-			GameTooltip:AddLine(AutoCage_GetLocalizedString (L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP), nil, nil, nil, true);
+			GameTooltip:SetText(AutoCage_GetLocalizedString(L_AUTOCAGE_DUPLICATE_PETS_BUTTON), 1, 1, 1);
+			GameTooltip:AddLine(AutoCage_GetLocalizedString(L_AUTOCAGE_DUPLICATE_PETS_BUTTON_TOOLTIP), nil, nil, nil, true);
 			GameTooltip:Show();
 		end
 	);
@@ -247,3 +275,39 @@ eventFrame:SetScript("OnUpdate", function(self, elapsed)
 		self.cageTimer = self.cageTimer + elapsed;
 	end
 end);
+
+local AutoCageCommands = {};
+function AutoCage_CommandToggle()
+	if AutoCageEnabled then
+		AutoCageEnabled = false;
+		AutoCage_Message(AutoCage_GetLocalizedString(L_AUTOCAGE_AUTO_DISABLED));
+	else
+		AutoCageEnabled = true;
+		AutoCage_Message(AutoCage_GetLocalizedString(L_AUTOCAGE_AUTO_ENABLED));
+	end
+end
+
+function AutoCage_CommandCage()
+	AutoCage_HandleAutoCaging(nil);
+	AutoCage_Message(AutoCage_GetLocalizedString(L_AUTOCAGE_CAGING));
+end
+
+function AutoCage_CommandDefault()
+	AutoCage_Message(AutoCage_GetLocalizedString(L_AUTOCAGE_COMMANDS_AVAILABLE));
+	local commandFormat = "   /%s - %s";
+
+	for id, node in pairs(AutoCageCommands) do
+		AutoCage_Message(commandFormat:format(id, node.info));
+	end
+end
+
+AutoCageCommands["help"] = { func = AutoCage_CommandDefault, info = AutoCage_GetLocalizedString(L_AUTOCAGE_COMMANDS_HELP) };
+AutoCageCommands["toggle"] = { func = AutoCage_CommandToggle, info = AutoCage_GetLocalizedString(L_AUTOCAGE_COMMANDS_TOGGLE) };
+AutoCageCommands["cage"] = { func = AutoCage_CommandCage, info = AutoCage_GetLocalizedString(L_AUTOCAGE_COMMANDS_CAGE) };
+
+-- Commands
+SLASH_AUTOCAGE1 = "/autocage";
+SlashCmdList["AUTOCAGE"] = function(text, editbox)
+	local command = AutoCageCommands[text] or AutoCageCommands["help"];
+	command.func();
+end;

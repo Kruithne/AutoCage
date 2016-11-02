@@ -1,3 +1,7 @@
+** Version 1.4.5 **
+* AutoCage will no longer attach to the Pet Journal if Rematch is installed and enabled.
+* Added slash command /autocage, allowing usage of the add-on without buttons!
+
 ** Version 1.4.4 **
 * Fixed edge-case issue that would prevent manual caging of pets.
 
