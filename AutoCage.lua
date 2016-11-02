@@ -87,10 +87,7 @@ L_AUTOCAGE_CHECKBOX_TOOLTIP = {
 	Selects the localized string from a localization table.
 ]]
 function AutoCage_GetLocalizedString(strings)
-	if strings[GetLocale()] ~= nil then
-		return strings[GetLocale()];
-	end
-	return strings["enGB"] or "Unknown";
+	return strings[GetLocale()] or strings["enUS"] or "Unknown";
 end
 
 --[[
