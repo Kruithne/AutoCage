@@ -1,4 +1,4 @@
-## Interface: 70100
+## Interface: 90005
 ## Title: AutoCage
 ## Notes: Automatically cage duplicate battle pets!
 ## Author: Kruithne
@@ -6,7 +6,7 @@
 ## SavedVariables: AutoCageEnabled
 AutoCage.lua
 
-## X-Contributors: bloerwald
+## X-Contributors: bloerwald lindseyburnett
 ## X-Curse-Project-ID: autocage
 ## X-GitHub-Repo: Kruithne/AutoCage
 ## X-Localization: enUS, frFR, deDE, itIT, koKR, zhCN, zhTW, ruRU, esES, esMX, ptBR
