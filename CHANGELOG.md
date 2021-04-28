@@ -1,3 +1,7 @@
+** Version 1.4.6 **
+* Updated to work with Shadowlands 9.0.5
+* Confirmed `/autocage cage` functionality is working, have not tested anything else
+
 ** Version 1.4.5 **
 * AutoCage will no longer attach to the Pet Journal if Rematch is installed and enabled.
 * Added slash command /autocage, allowing usage of the add-on without buttons!
