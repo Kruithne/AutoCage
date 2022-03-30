@@ -1,3 +1,7 @@
+** Version 1.4.7 **
+* Updated to work with Shadowlands 9.2.0
+* Confirmed `/autocage cage` functionality is working, have not tested anything else
+
 ** Version 1.4.6 **
 * Updated to work with Shadowlands 9.0.5
 * Confirmed `/autocage cage` functionality is working, have not tested anything else
