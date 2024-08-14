@@ -1,4 +1,4 @@
-## Interface: 100105
+## Interface: 110002
 ## Title: AutoCage
 ## Notes: Automatically cage duplicate battle pets!
 ## Author: Kruithne
