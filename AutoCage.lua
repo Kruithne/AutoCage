@@ -245,7 +245,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		elseif addon == "AutoCage" then
 			AutoCage_Load();
 
-			if IsAddOnLoaded("Blizzard_Collections") then
+			if C_AddOns.IsAddOnLoaded("Blizzard_Collections") then
 				AutoCage_JournalHook();
 			end
 		end
