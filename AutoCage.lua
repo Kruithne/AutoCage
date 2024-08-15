@@ -169,7 +169,7 @@ end
 	Hook our enable checkbox onto the journal frame.
 ]]
 function AutoCage_JournalHook()
-	if acHasHooked or IsAddOnLoaded("Rematch") then
+	if acHasHooked or C_AddOns.IsAddOnLoaded("Rematch") then
 		return;
 	end
 
@@ -245,7 +245,7 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		elseif addon == "AutoCage" then
 			AutoCage_Load();
 
-			if IsAddOnLoaded("Blizzard_Collections") then
+			if C_AddOns.IsAddOnLoaded("Blizzard_Collections") then
 				AutoCage_JournalHook();
 			end
 		end
