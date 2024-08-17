@@ -6,7 +6,7 @@
 ## SavedVariables: AutoCageEnabled
 AutoCage.lua
 
-## X-Contributors: bloerwald lindseyburnett
+## X-Contributors: bloerwald lindseyburnett I-AM-T3X
 ## X-Curse-Project-ID: autocage
 ## X-GitHub-Repo: Kruithne/AutoCage
 ## X-Localization: enUS, frFR, deDE, itIT, koKR, zhCN, zhTW, ruRU, esES, esMX, ptBR

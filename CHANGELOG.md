@@ -1,3 +1,6 @@
+** Version 1.4.9 **
+* Replaced deprecated IsAddOnLoaded with C_AddOns.IsAddOnLoaded to ensure compatibility with Patch 11.0.2.
+
 ** Version 1.4.7 **
 * Updated to work with Shadowlands 9.2.0
 * Confirmed `/autocage cage` functionality is working, have not tested anything else
