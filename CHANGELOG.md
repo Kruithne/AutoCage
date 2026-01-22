@@ -1,3 +1,6 @@
+** Version 1.5.0 **
+* Updated to work with Midnight 12.0.0
+
 ** Version 1.4.7 **
 * Updated to work with Shadowlands 9.2.0
 * Confirmed `/autocage cage` functionality is working, have not tested anything else
